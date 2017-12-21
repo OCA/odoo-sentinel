@@ -859,7 +859,7 @@ class SentinelBackException (SentinelException):
     pass
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
@@ -876,3 +876,6 @@ if __name__ == '__main__':
     args = parser.parse_args(sys.argv[1:])
 
     curses.wrapper(Sentinel, args)
+
+if __name__ == '__main__':
+    main()
