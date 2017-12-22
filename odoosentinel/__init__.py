@@ -88,6 +88,9 @@ class Sentinel(object):
 
         # Initialize window
         self.screen = stdscr
+        self.auto_resize = False
+        self.window_width = 18
+        self.window_height = 6
         self._set_screen_size()
 
         self._init_colors()
@@ -126,6 +129,20 @@ class Sentinel(object):
         if isinstance(self.scenario_id, list):
             self.scenario_id, self.scenario_name = self.scenario_id
 
+    def _resize(self):
+        """
+        Resizes the window
+        """
+        # Asks for the hardware screen size
+        (
+            self.window_width,
+            self.window_height,
+        ) = self.oerp_call('screen_size')[1]
+        if not self.window_width or not self.window_height:
+            self.auto_resize = True
+
+        self._set_screen_size()
+
     def _init_colors(self):
         """
         Initialize curses colors
@@ -150,7 +167,13 @@ class Sentinel(object):
         self._init_colors()
 
     def _set_screen_size(self):
-        self.window_height, self.window_width = self.screen.getmaxyx()
+        # Get the dimensions of the hardware
+        if self.auto_resize:
+            (
+                self.window_width,
+                self.window_height,
+            ) = self.screen.getmaxyx()
+
         self.screen.resize(self.window_height, self.window_width)
 
     def _get_color(self, name):
