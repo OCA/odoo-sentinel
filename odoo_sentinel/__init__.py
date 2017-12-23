@@ -88,6 +88,11 @@ class Sentinel(object):
 
         # Initialize window
         self.screen = stdscr
+        self.auto_resize = False
+        self.window_width = 18
+        self.window_height = 6
+        # Store the initial screen size before resizing it
+        initial_screen_size = self.screen.getmaxyx()
         self._set_screen_size()
 
         self._init_colors()
@@ -106,6 +111,7 @@ class Sentinel(object):
             self.scanner_check()
 
         # Reinit colors with values configured in OpenERP
+        self._resize(initial_screen_size)
         self._reinit_colors()
 
         # Initialize mouse events capture
@@ -125,6 +131,23 @@ class Sentinel(object):
             'scanner.hardware'].scanner_check(self.hardware_code)
         if isinstance(self.scenario_id, list):
             self.scenario_id, self.scenario_name = self.scenario_id
+
+    def _resize(self, initial_screen_size):
+        """
+        Resizes the window
+        """
+        # Asks for the hardware screen size
+        (
+            self.window_width,
+            self.window_height,
+        ) = self.oerp_call('screen_size')[1]
+        if not self.window_width or not self.window_height:
+            self.auto_resize = True
+            # Restore the initial size to allow detecting the real size
+            (self.window_height, self.window_width) = initial_screen_size
+            self.screen.resize(self.window_height, self.window_width)
+
+        self._set_screen_size()
 
     def _init_colors(self):
         """
@@ -150,7 +173,13 @@ class Sentinel(object):
         self._init_colors()
 
     def _set_screen_size(self):
-        self.window_height, self.window_width = self.screen.getmaxyx()
+        # Get the dimensions of the hardware
+        if self.auto_resize:
+            (
+                self.window_height,
+                self.window_width,
+            ) = self.screen.getmaxyx()
+
         self.screen.resize(self.window_height, self.window_width)
 
     def _get_color(self, name):
