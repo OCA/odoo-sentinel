@@ -8,8 +8,8 @@ setup(
     version='1.0',
     author='Sylvain Garancher',
     author_email='sylvain.garancher@syleam.fr',
-    packages=['odoosentinel'],
-    package_data={'odoosentinel': ['i18n/*/LC_MESSAGES/*.mo']},
+    packages=['odoo_sentinel'],
+    package_data={'odoo_sentinel': ['i18n/*/LC_MESSAGES/*.mo']},
     requires=[
         'odoorpc',
     ],
@@ -18,7 +18,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'odoo-sentinel = odoosentinel:main',
+            'odoo-sentinel = odoo_sentinel:main',
         ],
     },
     license='LICENSE.txt',
