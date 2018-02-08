@@ -101,9 +101,14 @@ class Sentinel(object):
             self.hardware_code = ssh_data[0]
             self.scanner_check()
         except:
-            self.hardware_code = self._input_text(
-                _('Autoconfiguration failed !\nPlease enter terminal code'))
-            self.scanner_check()
+            try:
+                self.hardware_code = os.environ['ODOO_SENTINEL_CODE']
+                self.scanner_check()
+            except:
+                self.hardware_code = self._input_text(
+                    _('Autoconfiguration failed !\nPlease enter terminal code')
+                )
+                self.scanner_check()
 
         # Reinit colors with values configured in OpenERP
         self._reinit_colors()
