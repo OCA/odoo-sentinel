@@ -191,7 +191,10 @@ class Sentinel(object):
             key = self._read_from_file()
         else:
             # Get the pushed character
-            key = self.screen.getkey()
+            try:
+                key = self.screen.getkey()
+            except Exception:
+                key = None
         if key == '':
             # Escape key : Return back to the previous step
             raise SentinelBackException('Back')
