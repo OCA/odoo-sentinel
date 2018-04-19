@@ -6,6 +6,7 @@ import argparse
 import curses.ascii
 import gettext
 import math
+import locale
 import odoorpc
 import os
 import sys
@@ -14,6 +15,9 @@ import traceback
 
 from datetime import datetime
 from functools import reduce
+
+locale.setlocale(locale.LC_ALL, '')
+encoding = locale.getpreferredencoding()
 
 # Translation configuration
 I18N_DIR = '%s/i18n/' % os.path.dirname(os.path.realpath(__file__))
@@ -257,7 +261,7 @@ class Sentinel(object):
 
         # Display the text
         if not scroll:
-            self.screen.addstr(y, x, text, color)
+            self.screen.addstr(y, x, text.encode(encoding), color)
         else:
             # Wrap the text to avoid splitting words
             text_lines = []
@@ -277,9 +281,9 @@ class Sentinel(object):
                 # Display the menu
                 self.screen.addstr(height - 1, x,
                                    (self.window_width - x - 1) * ' ', color)
+                text = text_lines[first_line:first_line + height - y]
                 self.screen.addstr(
-                    y, x, '\n'.join(
-                        text_lines[first_line:first_line + height - y]),
+                    y, x, '\n'.join(text).encode(encoding),
                     color)
 
                 # Display arrows
