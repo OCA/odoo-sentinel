@@ -1,0 +1,13 @@
+language: python
+script:
+  - echo "no tests"
+deploy:
+  provider: pypi
+  user: OCA
+  password:
+    secure: "otKbr/OyhJt/OCx9DiDRQVlYK30cBBsLuMP6mFA6tVvs+iv9BaxO/7aXBaoUteKyKuevJrputwu36RRO7axreDUDZohI3pu49tlN+ISivMXrEJWnWl2cJEVItyEBb9deTUQQi4ZkBiW36yBGGvquA0dxLaZlvRx3F3IbxYRSmBUTIaWsWvKZnQ/q5AmnuLNXogtWrf2e6K1e7CGJGMlxLAhK0kpoaVMJjJp0w9CojOPkOGlB5zteI3YQOANl8Vs+gJQVc5feFC80FJTVMKiSfK75T7Enmj4cnQu0O44sxotmMC+YYtBXe4MetNE2Bt/qzP3k62ZlnVzeUJDMX2sdfYFp2XVymNKVZhefVu5jg2tRN2eFrUBnGADc69L+f9y6sE7eR9qkPFYXcrmap0GThadn4Fvau6okadqKGwqlr28GcZy03SQr6kTxKYF+uJ5Dqv2ZHoSz9GlV2tFnvD9etvCF8iaQ1jlHn/0K80YxGNt10iH/405nD686XYMs1U+3/1hevAuS2/UDObtVyLBRz+B0+izMUnXYWpbjH2rLl7QOQfFiEDf/QaY1C49ifXfbNXNX1u1dABkBzyuMg1JRgUHfGq+EKQIvMPqmU54Gkn4KluTJrbrYAh8vc4cEtks5H9++Y3vc6ZCVg2alHoP8g9W/KN5pkm8kA4vZ36NhKoQ="
+  distributions: "sdist bdist_wheel"
+  on:
+    repo: OCA/odoo-sentinel
+    branch: master
+    tags: true
