@@ -5,16 +5,16 @@ from setuptools import setup
 
 setup(
     name='odoo-sentinel',
-    version='1.0',
+    use_scm_version=True,
     author='Sylvain Garancher',
     author_email='sylvain.garancher@syleam.fr',
     packages=['odoo_sentinel'],
     package_data={'odoo_sentinel': ['i18n/*/LC_MESSAGES/*.mo']},
-    requires=[
-        'odoorpc',
-    ],
     install_requires=[
         'odoorpc',
+    ],
+    setup_requires=[
+        'setuptools_scm',
     ],
     entry_points={
         'console_scripts': [
